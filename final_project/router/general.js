@@ -51,7 +51,7 @@ public_users.get('/review/:isbn',function (req, res) {
 });
 
 // TASK 10 - Get the book list available in the shop using promises
-public_users.get('/async-get-books',function (req, res) {
+public_users.get('/allbooks',function (req, res) {
 
     const get_books = new Promise((resolve, reject) => {
         resolve(res.send(JSON.stringify({books}, null, 4)));
@@ -61,7 +61,22 @@ public_users.get('/async-get-books',function (req, res) {
 
   });
 
+// TASK 11 - Get the book details based on ISBN using promises
+public_users.get('/books/isbn/:isbn',function (req, res) {
+    const get_books_isbn = new Promise((resolve, reject) => {
 
+    let booksbyisbn = [];
+    let isbns = Object.keys(books);
+    isbns.forEach((isbn) => {
+        if(books[isbn]["isbn"] === req.params.isbn) {
+            booksbyisbn.push({"isbn":isbn,
+                              "title":books[isbn]["title"],
+                              "author":books[isbn]["author"]});
+        resolve(res.send(JSON.stringify({booksbyisbn}, null, 4)));
+        }
+    });
+    reject(res.send("This isbn does not exist"))
+    })
 
 // TASK 12 - Get book details based on author
 public_users.get('/books/author/:author',function (req, res) {
@@ -77,11 +92,8 @@ public_users.get('/books/author/:author',function (req, res) {
                             "reviews":books[isbn]["reviews"]});
       resolve(res.send(JSON.stringify({booksbyauthor}, null, 4)));
       }
-
-
     });
-    reject(res.send("The mentioned author does not exist "))
-        
+    reject(res.send("The mentioned author does not exist ")) 
     });
 
     get_books_author.then(function(){
