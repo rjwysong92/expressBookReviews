@@ -61,25 +61,7 @@ public_users.get('/async-get-books',function (req, res) {
 
   });
 
-// TASK 11 - Get the book details based on ISBN using promises
-public_users.get('/async-get-book-by-isbn/:isbn', function (req, res) {
-    
-    const get_by_isbn = new Promise((resolve, reject) => {
-        
-        let booksbyisbn = [];
-        let isbn = Object.keys(books);
-        isbn.forEach((isbn) => {
-            if(books[isbn]["isbn"]) = req.params.isbn) {
-                booksbyisbn.push({
-                    "isbn": isbn,
-                    "title": books[isbn]["title"],
-                    "author": books[author]["author"]});    
-    
-        resolve(res.send(JSON.stringify({booksbyisbn}, null, 4)));
-    }});
-    
-    get_by_isbn.then(() => console.log("Promise for Task 11 resolved"))
-});
+
 
 // TASK 12 - Get book details based on author
 public_users.get('/books/author/:author',function (req, res) {

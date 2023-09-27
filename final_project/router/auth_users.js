@@ -62,17 +62,12 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 });
 
 // Delete a book reivew done only by specific authorized user
-regd_users.delete("/auth/review/:isbn", (req, res) => {
-    const isbn = req.params.books[isbn];
-    let reviewer = req.session.authorization['username'];
-    if (filtered_review[reviewer]){
-        delete filtered_review[reviewer];
-        res.send(`Reviews for the ISBN ${isbn} posted by the user ${reviewer} deleted.`);
-    }
-    else{
-        res.send("can't delete, as this review has been posted by a different user");
-    }
-    });
+regd_users.delete("/auth/review/:isbn", (req, res)=>{
+    const isbn = req.params.isbn;
+    const user = req.session.authorization["username"];
+    delete books[isbn]["reviews"][user];
+    res.send("Delete success!")
+});
 
 
 module.exports.authenticated = regd_users;
